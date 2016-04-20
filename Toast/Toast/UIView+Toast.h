@@ -166,6 +166,9 @@ extern const NSString * CSToastPositionBottom;
          position:(id)position
        completion:(void(^)(BOOL didTap))completion;
 
+- (NSMutableArray *)cs_visibleToasts;
+- (void)cs_hideToast:(UIView *)toast;
+
 @end
 
 /**
@@ -309,8 +312,6 @@ extern const NSString * CSToastPositionBottom;
  */
 - (instancetype)init NS_UNAVAILABLE;
 
-- (NSMutableArray *)cs_visibleToasts;
-- (void)cs_hideToast:(UIView *)toast;
 
 @end
 
