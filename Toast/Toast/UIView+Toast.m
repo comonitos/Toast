@@ -41,6 +41,7 @@ static const NSString * CSToastCompletionKey        = @"CSToastCompletionKey";
 static const NSString * CSToastActiveToastViewKey   = @"CSToastActiveToastViewKey";
 static const NSString * CSToastActivityViewKey      = @"CSToastActivityViewKey";
 static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
+static const NSString * CSVisibleToastsKey          = @"CSVisibleToastsKey";
 
 @interface UIView (ToastPrivate)
 
@@ -126,6 +127,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     // set the active toast
     objc_setAssociatedObject(self, &CSToastActiveToastViewKey, toast, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
+    [[self cs_visibleToasts] addObject:toast];
     [self addSubview:toast];
     
     [UIView animateWithDuration:[[CSToastManager sharedStyle] fadeDuration]
@@ -151,6 +153,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
                      animations:^{
                          toast.alpha = 0.0;
                      } completion:^(BOOL finished) {
+                         [[self cs_visibleToasts] removeObject:toast];
                          [toast removeFromSuperview];
                          
                          // clear the active toast
@@ -301,6 +304,14 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 }
 
 #pragma mark - Queue
+- (NSMutableArray *)cs_visibleToasts {
+    NSMutableArray *cs_toastQueue = objc_getAssociatedObject(self, &CSVisibleToastsKey);
+    if (cs_toastQueue == nil) {
+        cs_toastQueue = [[NSMutableArray alloc] init];
+        objc_setAssociatedObject(self, &CSVisibleToastsKey, cs_toastQueue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return cs_toastQueue;
+}
 
 - (NSMutableArray *)cs_toastQueue {
     NSMutableArray *cs_toastQueue = objc_getAssociatedObject(self, &CSToastQueueKey);

@@ -309,6 +309,9 @@ extern const NSString * CSToastPositionBottom;
  */
 - (instancetype)init NS_UNAVAILABLE;
 
+- (NSMutableArray *)cs_visibleToasts;
+- (void)cs_hideToast:(UIView *)toast
+
 @end
 
 /**
@@ -402,5 +405,6 @@ extern const NSString * CSToastPositionBottom;
  CSToastPosition constants or a `CGPoint` wrapped in an `NSValue` object.
  */
 + (id)defaultPosition;
+
 
 @end
