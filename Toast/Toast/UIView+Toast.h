@@ -310,7 +310,7 @@ extern const NSString * CSToastPositionBottom;
 - (instancetype)init NS_UNAVAILABLE;
 
 - (NSMutableArray *)cs_visibleToasts;
-- (void)cs_hideToast:(UIView *)toast
+- (void)cs_hideToast:(UIView *)toast;
 
 @end
 
